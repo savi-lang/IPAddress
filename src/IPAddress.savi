@@ -1,6 +1,6 @@
 :struct IPAddress
-  :let _raw_v6_hi U64
-  :let _raw_v6_lo U64
+  :let _v6_raw_hi U64
+  :let _v6_raw_lo U64
 
   // This field indicates whether the address is IPv4 or IPv6, and also
   // indicates the number of leading significant bits (i.e. a CIDR mask).
@@ -16,13 +16,13 @@
 
   // For IPv4, the raw bytes are kept in the low 32 bits of the IPv6 raw bytes.
   // Here we define a getter and setter function to let us access them easily.
-  :fun _raw_v4: @_raw_v6_lo.u32
+  :fun _v4_raw: @_v6_raw_lo.u32
 
-  :new val new_raw_v4(raw_v4 U32): @_raw_v6_hi = 0, @_raw_v6_lo = raw_v4.u64, @_bits = 96
-  :new val new_raw_v6(@_raw_v6_hi, @_raw_v6_lo): @_bits = -128
+  :new val new_v4_raw(v4_raw U32): @_v6_raw_hi = 0, @_v6_raw_lo = v4_raw.u64, @_bits = 96
+  :new val new_v6_raw(@_v6_raw_hi, @_v6_raw_lo): @_bits = -128
 
   :fun _v4_each_u8
-    raw = @_raw_v4
+    raw = @_v4_raw
     yield raw.bit_shr(24).u8
     yield raw.bit_shr(16).u8
     yield raw.bit_shr(8).u8
@@ -30,8 +30,8 @@
     @
 
   :fun _v6_each_u16
-    raw_hi = @_raw_v6_hi
-    raw_lo = @_raw_v6_lo
+    raw_hi = @_v6_raw_hi
+    raw_lo = @_v6_raw_lo
     yield raw_hi.bit_shr(48).u16
     yield raw_hi.bit_shr(32).u16
     yield raw_hi.bit_shr(16).u16
