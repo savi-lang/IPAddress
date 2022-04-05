@@ -1,4 +1,4 @@
-:struct IPAddress
+:struct val IPAddress
   :let _v6_raw_hi U64
   :let _v6_raw_lo U64
 
@@ -20,6 +20,12 @@
 
   :new val new_v4_raw(v4_raw U32): @_v6_raw_hi = 0, @_v6_raw_lo = v4_raw.u64, @_bits = 96
   :new val new_v6_raw(@_v6_raw_hi, @_v6_raw_lo): @_bits = -128
+
+  :fun non v4_zero: @new_v4_raw(0)
+  :fun non v6_zero: @new_v6_raw(0, 0)
+
+  :fun val with_port_number(port_number)
+    IPAddress.WithPortNumber.new(@, port_number)
 
   :fun _v4_each_u8
     raw = @_v4_raw

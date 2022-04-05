@@ -1,0 +1,7 @@
+:class IPAddress.WithPortNumber.Spec
+  :is Spec
+  :const describes: "IPAddress.WithPortNumber"
+
+  :it "associates a port number to an IP address"
+    assert: "\(IPAddress.v4_zero.with_port_number(8080))" == "0.0.0.0:8080"
+    assert: "\(IPAddress.v6_zero.with_port_number(0xFFFF))" == "[::]:65535"

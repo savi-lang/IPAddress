@@ -1,0 +1,25 @@
+:struct val IPAddress.WithPortNumber
+  :let address IPAddress
+  :let port_number U16
+  :new val (@address, @port_number)
+
+  :is IntoString
+  :fun into_string_space:
+    if @address.is_v4 (
+      @address.into_string_space + 1 + @port_number.into_string_space
+    |
+      @address.into_string_space + 3 + @port_number.into_string_space
+    )
+  :fun into_string(out String'iso)
+    if @address.is_v4 (
+      out = @address.into_string(--out)
+      out.push_byte(':')
+      out = @port_number.into_string(--out)
+    |
+      out.push_byte('[')
+      out = @address.into_string(--out)
+      out.push_byte(']')
+      out.push_byte(':')
+      out = @port_number.into_string(--out)
+    )
+    --out
