@@ -10,16 +10,15 @@
     |
       @address.into_string_space + 3 + @port_number.into_string_space
     )
-  :fun into_string(out String'iso)
+  :fun into_string(out String'ref) None
     if @address.is_v4 (
-      out = @address.into_string(--out)
+      @address.into_string(out)
       out.push_byte(':')
-      out = @port_number.into_string(--out)
+      @port_number.into_string(out)
     |
       out.push_byte('[')
-      out = @address.into_string(--out)
+      @address.into_string(out)
       out.push_byte(']')
       out.push_byte(':')
-      out = @port_number.into_string(--out)
+      @port_number.into_string(out)
     )
-    --out

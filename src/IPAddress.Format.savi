@@ -11,13 +11,13 @@
       "xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx".size
     )
 
-  :fun into_string(out String'iso) String'iso
+  :fun into_string(out String'ref) None
     at_start = True
     if @_value.is_v4 (
       @_value._v4_each_u8 -> (u8 |
         if !at_start out.push_byte('.')
         at_start = False
-        out = u8.into_string(--out)
+        u8.into_string(out)
       )
     |
       previous_deferred_zero = False
@@ -51,9 +51,8 @@
         )
         if !at_start out.push_byte(':')
         at_start = False
-        out = u16
+        u16
           .format.hex.bare.lowercase.without_leading_zeros
-          .into_string(--out)
+          .into_string(out)
       )
     )
-    --out
