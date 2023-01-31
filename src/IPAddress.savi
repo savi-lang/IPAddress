@@ -51,5 +51,5 @@
   :fun format: IPAddress.Format.new(@)
 
   :is IntoString
-  :fun into_string(out String'iso): @format.into_string(--out)
+  :fun into_string(out): @format.into_string(out)
   :fun into_string_space: @format.into_string_space
