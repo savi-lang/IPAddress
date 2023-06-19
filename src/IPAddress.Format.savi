@@ -24,7 +24,7 @@
       is_compressing_zeros = False
       did_compress_zeros = False
       @_value._v6_each_u16 -> (u16 |
-        if (u16 == 0 && !did_compress_zeros) (
+        if u16 == 0 && !did_compress_zeros (
           case (
           | is_compressing_zeros | next // go straight to the next u16
           | previous_deferred_zero |
